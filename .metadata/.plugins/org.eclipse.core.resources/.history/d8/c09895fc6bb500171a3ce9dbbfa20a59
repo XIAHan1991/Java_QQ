@@ -1,0 +1,36 @@
+package com.qq.server.manager;
+import java.util.*;
+import com.qq.server.model.*;
+
+/*
+ * the class manager the connected client thread
+ */
+
+public class ManagerConnectUser {
+	public static HashMap<String,ServerConClientThread> ConectedClients =
+			new HashMap<String,ServerConClientThread>();
+	public static void addClientThread(String userID,ServerConClientThread myCon){
+		ConectedClients.put(userID, myCon);
+	}
+	public static ServerConClientThread getClientThread(String userID){
+		return ConectedClients.get(userID);
+	}
+	public static boolean isOnLineUser(String userID){
+		boolean b = false;
+		if(ConectedClients.containsKey(userID))
+			b = true;
+		return b;
+	}
+	public static void removeConnectThread(String userID){
+		ServerConClientThread myConThread = getClientThread(userID);
+		if(myConThread != null){
+			try{
+				myConThread.getS().close();
+				myConThread.interrupt();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+}

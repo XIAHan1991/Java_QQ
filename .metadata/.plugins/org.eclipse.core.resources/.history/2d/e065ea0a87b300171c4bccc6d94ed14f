@@ -1,0 +1,28 @@
+package com.qq.server.model;
+
+import java.net.*;
+import java.io.*;
+import java.util.*;
+/*
+ * this is the server for qq
+ */
+public class MyQqServer {
+	
+	public MyQqServer(){
+		try{
+			//在 9999 端口监听
+			ServerSocket ss = new ServerSocket(9999);
+			//阻塞，等待连接
+			Socket s = ss.accept();
+			//接受用户信息			
+			
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			
+		}
+	}
+	
+}

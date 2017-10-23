@@ -1,0 +1,44 @@
+package com.qq.server.model;
+import java.net.*;
+import java.io.*;
+import com.qq.common.*;
+import com.qq.server.manager.*;
+/*
+ * to Create the thread to get message
+ */
+public class ServerConClientThread extends Thread{
+
+	private Socket s;
+	public ServerConClientThread(Socket s) {
+		
+		this.s = s;
+	}
+	
+	public Socket getS() {
+		return s;
+	}
+
+	public void setS(Socket s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while(true){
+			try{
+				ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+				Message m =(Message) ois.readObject();
+				System.out.println(m.getSender()+"发送给"+m.getReciever()+":"+m.getMessage()+" at "+m.getSendTime());
+				Socket sR =ManagerConnectUser.getClientThread(m.getReciever()).getS();
+				ObjectOutputStream oos = new ObjectOutputStream(sR.getOutputStream());
+				oos.writeObject(m);
+				System.out.println(m.getSender()+"发送给"+m.getReciever()+":"+m.getMessage());
+			}catch (Exception e) {
+				e.printStackTrace();
+				//TODO to end the thread when Logout
+				break;
+			}
+		}
+	}
+
+}

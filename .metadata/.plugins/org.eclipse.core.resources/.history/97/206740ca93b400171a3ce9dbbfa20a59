@@ -1,0 +1,5 @@
+package com.qq.client.manager;
+
+public class ManagerChatDialog {
+
+}

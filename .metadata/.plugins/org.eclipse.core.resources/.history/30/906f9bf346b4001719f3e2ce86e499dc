@@ -1,0 +1,14 @@
+package com.qq.common;
+
+public class MessType {
+	public static String loginSucess = "Login Successfully";
+	public static String loginFail = "Login Failed";
+	public static String conMessage = "Common Message";
+	public static String videoMessage = "Video Message";
+	public static String soundMessage = "Sound Message";
+	public static String figureMessage = "Figure Message";
+	public static String folderMessage = "Folder Message";
+	public static String expreMessage = "Expression Message";
+	public static String requestMessage= "Request Message";
+	public static String returnMessage = "Return Message";
+}

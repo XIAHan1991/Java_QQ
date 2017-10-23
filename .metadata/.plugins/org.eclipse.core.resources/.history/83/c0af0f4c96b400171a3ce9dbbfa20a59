@@ -1,0 +1,38 @@
+package com.qq.client.model;
+import java.net.*;
+import java.io.*;
+import com.qq.common.*;
+
+public class ClientConServerThread extends Thread{
+
+	Socket s;
+	public ClientConServerThread(Socket s){
+		this.s = s;
+	}
+	
+	
+	public Socket getS() {
+		return s;
+	}
+
+
+	public void setS(Socket s) {
+		this.s = s;
+	}
+
+
+	@Override
+	public void run(){
+		while(true){
+			try{
+				System.out.println("I am a client thread in client!!!");
+				ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+				Message m = (Message) ois.readObject();
+				System.out.println(m.getSender()+ "发送给"+m.getReciever()+"/n "+m.getMessage());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}
+}

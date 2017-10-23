@@ -1,0 +1,48 @@
+package com.qq.client.model;
+
+import java.net.*;
+import java.io.*;
+import java.util.*;
+import com.qq.client.manager.*;
+import com.qq.common.*;
+/*
+ * Connect the server 
+ */
+public class QqConServer {
+
+	//TODO delete the static Using HashMap to manage the socket
+	public Socket s;
+	
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
+	public QqConServer(){
+		try {
+			s = new Socket(ServerInfo.IpAdress,ServerInfo.MyPort);
+			oos = new ObjectOutputStream(s.getOutputStream());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			
+		}
+	}
+	public boolean sendLoginInfo(LoginInfo u){
+		boolean b = false;
+		try{
+			oos.writeObject(u);
+			oos.flush();
+			ois = new ObjectInputStream(s.getInputStream());
+			Message ms = (Message) ois.readObject();
+			if (ms.getMesType().equals(MessType.loginSucess)){
+				b = true;
+				ClientConServerThread myConThread = new ClientConServerThread(s);
+				ManagerClientThread.addClientThread(u.getUserName(),myConThread);
+				myConThread.start();
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+}

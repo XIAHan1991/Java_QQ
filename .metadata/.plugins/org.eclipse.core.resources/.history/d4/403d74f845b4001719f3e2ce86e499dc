@@ -1,0 +1,52 @@
+package com.qq.client.model;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+import com.qq.common.*;
+
+public class QqConServer {
+
+	public static Socket s;
+	
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
+	public QqConServer(){
+		try {
+			s = new Socket("127.0.0.1", 9999);
+			oos = new ObjectOutputStream(s.getOutputStream());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}finally{
+			
+		}
+	}
+	public boolean sendLoginInfo(User u){
+		boolean b = false;
+		try{
+			oos.writeObject(u);
+			oos.flush();
+			ois = new ObjectInputStream(s.getInputStream());
+			Message ms = (Message) ois.readObject();
+			if (ms.getMesType().equals("1")){
+				b = true;
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return b;
+	}
+	public void sendChatMessage(Object o){
+		try{
+			oos.writeObject(o);
+			oos.flush();
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+	}
+}

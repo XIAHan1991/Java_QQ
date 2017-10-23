@@ -1,0 +1,18 @@
+package com.qq.client.view;
+import javax.swing.*;
+
+import org.omg.CORBA.portable.ApplicationException;
+
+import java.awt.*;
+import com.apple.eawt.AppEvent.*;
+import com.apple.eawt.*;
+import com.apple.*;
+
+public class Test{
+	public static void main(String[] args)
+	{
+	    final JFrame frame = new JFrame();
+	    Application application = Application.getApplication();
+
+	}
+}

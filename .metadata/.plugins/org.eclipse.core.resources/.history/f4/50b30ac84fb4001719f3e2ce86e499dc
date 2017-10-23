@@ -1,0 +1,81 @@
+package com.qq.client.view;
+
+import java.awt.*;
+import javax.swing.*;
+import java.util.*;
+import java.awt.event.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import com.qq.client.model.*;
+import com.qq.common.*;
+
+
+public class ChatDialog extends JFrame implements ActionListener,Runnable{
+
+	/**
+	 * the interface to show the chat Dialog
+	 */
+	private static final long serialVersionUID = 1L;
+	JButton jb1;
+	JTextArea jta;
+	JTextField jtf;
+	JScrollPane jsp;
+	JPanel jp1;
+	String ownerID,friend;
+	//QqConServer myCon;
+	public ChatDialog(String ownerID,String friend){
+		//this.myCon = myCon;
+		this.ownerID = ownerID;
+		this.friend = friend;
+		jb1 =new JButton("Send");
+		jb1.addActionListener(this);
+		jb1.setActionCommand("Send");
+		jta = new JTextArea();
+		jsp = new JScrollPane(jta);
+		jtf = new JTextField(15);
+		jp1 = new JPanel();
+		jp1.add(jtf); jp1.add(jb1);
+		
+		this.add(jsp);
+		this.add(jp1,"South");
+		
+		this.setVisible(true);
+		this.setIconImage((new ImageIcon("Images/head.GIF")).getImage());
+		this.setTitle(this.ownerID+"正在与"+this.friend+"聊天");
+		this.setSize(300,200);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("Send")){
+			Message m = new Message();
+			m.setMesType(MessType.comMessage);
+			m.setSender(ownerID);
+			m.setReciever(friend);
+			m.setMessage(jtf.getText().trim());
+			m.setSendTime((new Date()).toString());
+			//myCon.sendChatMessage(m);
+			try{
+				ObjectOutputStream oos = new ObjectOutputStream(QqConServer.s.getOutputStream());
+				oos.writeObject(m);
+			}catch(Exception e1){
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+	@Override
+	public void run() {
+		while(true){
+			try {
+				ObjectInputStream ois = new ObjectInputStream(QqConServer.s.getInputStream());
+				Message m = (Message) ois.readObject();
+				jta.append(m.getSender()+" send you:\n		"+m.getMessage()+"\n");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+		
+	}
+
+}

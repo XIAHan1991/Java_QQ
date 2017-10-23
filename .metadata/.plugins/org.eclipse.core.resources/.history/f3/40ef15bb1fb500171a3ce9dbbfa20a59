@@ -1,0 +1,82 @@
+package com.qq.server.view;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.*;
+import com.qq.server.model.*;
+import com.apple.eawt.*;
+import com.apple.eawt.AppEvent.*;
+/*
+ * the interface to manage the Server
+ */
+@SuppressWarnings("restriction")
+public class MyServerFrame extends JFrame implements ActionListener,AppReOpenedListener{
+
+	JButton jb1,jb2,jb3;
+	JPanel jp1;
+	MyQqServer myServer;
+	Thread t;
+	Application app;
+	public static void main(String[] args) {
+
+		new MyServerFrame();
+	}
+	public MyServerFrame(){
+		app = Application.getApplication();
+		app.addAppEventListener(this);
+		jp1 = new JPanel();
+		jb1 = new JButton("启动服务器");
+		jb1.addActionListener(this);
+		jb1.setActionCommand("StartServer");
+		jb2 = new JButton("关闭服务器");
+		jb2.setEnabled(false);
+		jb2.addActionListener(this);
+		jb2.setActionCommand("CloseServer");
+		jb3 = new JButton("退 出");
+		jb3.addActionListener(this);
+		jb3.setActionCommand("CloseWindow");		
+		jp1.add(jb1); jp1.add(jb2); jb1.add(jb3);
+		//this.setDefaultCloseOperation(0);
+		this.add(jp1);
+		this.setSize(500,400);
+		this.setVisible(true);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("StartServer")){
+			myServer = new MyQqServer();
+			t = new Thread(myServer);
+			t.start();
+			jb2.setEnabled(true);
+			jb1.setEnabled(false);
+		}
+		if(e.getActionCommand().equals("CloseServer")){
+			myServer.CloseServer();
+			System.out.println("关闭服务器！！");
+			t.interrupt();
+			//myServer.CloseServer();
+			jb1.setEnabled(true);
+			jb2.setEnabled(false);
+		}
+		if(e.getActionCommand().equals("CloseWindow")){
+			int n = JOptionPane.showConfirmDialog(this, "Are you sure to close the window and Exit System",
+					"Exit The System",JOptionPane.OK_CANCEL_OPTION);
+			if(n == JOptionPane.OK_OPTION){
+				myServer.CloseServer();
+				System.out.println("关闭服务器！！");
+				t.interrupt();
+				System.exit(0);
+			}
+			else return;
+		}
+		
+	}
+	@Override
+	public void appReOpened(AppReOpenedEvent arg0) {
+		if(arg0.getSource().equals(app)){
+			System.out.println("the frame reopen");
+			this.setVisible(true);
+		}
+		
+	}
+}

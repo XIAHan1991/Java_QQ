@@ -1,0 +1,15 @@
+package com.qq.client.manager;
+import java.util.*;
+import com.qq.client.model.*;
+
+public class ManagerClientThread {
+	public static HashMap<String,ClientConServerThread> myClientThreads = 
+			new HashMap<String,ClientConServerThread>(); 
+
+	public void addClientThread(String userID,ClientConServerThread myThread){
+		myClientThreads.put(userID, myThread);
+	}
+	public ClientConServerThread getClientThread(String userID){
+		return myClientThreads.get(userID);
+	}
+}

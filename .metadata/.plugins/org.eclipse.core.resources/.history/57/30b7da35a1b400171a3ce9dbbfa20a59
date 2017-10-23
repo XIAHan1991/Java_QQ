@@ -1,0 +1,15 @@
+package com.qq.client.manager;
+import java.util.*;
+import com.qq.client.view.*;
+
+public class ManagerChatDialog {
+	public static HashMap<String, ChatDialog> ManageChats = new HashMap<String, ChatDialog>();
+	
+	public static void addChatDialog(String dialogID, ChatDialog myDialog){
+		ManageChats.put(dialogID, myDialog);
+	}
+	public static ChatDialog getChatDialog(String dialogID){
+		return ManageChats.get(dialogID);
+	}
+
+}

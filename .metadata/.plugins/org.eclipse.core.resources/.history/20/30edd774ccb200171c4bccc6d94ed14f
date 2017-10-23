@@ -1,0 +1,6 @@
+package com.qq.client.model;
+
+public class QqClientUser {
+	
+
+}

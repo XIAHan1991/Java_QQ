@@ -1,0 +1,32 @@
+package com.qq.client.view;
+import java.awt.*;
+import javax.swing.*;
+import java.util.*;
+import java.awt.event.*;
+
+
+public class ChatDialog extends JFrame {
+
+	JButton jb1;
+	JTextArea jta;
+	JTextField jtf;
+	JScrollPane jsp;
+	JPanel jp1;
+	public ChatDialog(String friend){
+		jb1 =new JButton("Send");
+		jta = new JTextArea();
+		jsp = new JScrollPane(jta);
+		jtf = new JTextField(15);
+		jp1 = new JPanel();
+		jp1.add(jtf); jp1.add(jb1);
+		
+		this.add(jsp);
+		this.add(jp1,"South");
+		
+		this.setVisible(true);
+		this.setIconImage((new ImageIcon("Images/head.GIF")).getImage());
+		this.setTitle("你正在与"+friend+"聊天");
+		this.setSize(300,200);
+	}
+
+}

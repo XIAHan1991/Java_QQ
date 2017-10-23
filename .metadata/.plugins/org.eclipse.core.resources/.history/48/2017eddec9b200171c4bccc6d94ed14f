@@ -1,0 +1,20 @@
+package com.qq.client.model;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class MyQqConServer {
+
+	public MyQqConServer(){
+		try {
+			Socket s = new Socket("127.0.0.1", 9999);
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}finally{
+			
+		}
+	}
+}

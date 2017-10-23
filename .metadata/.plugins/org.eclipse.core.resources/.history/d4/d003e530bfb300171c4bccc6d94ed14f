@@ -1,0 +1,23 @@
+package com.qq.common;
+
+import java.io.Serializable;
+
+/*
+ * MesType 1: login successful
+ *         2: login fail
+ *         3: normal message
+ */
+
+public class Message implements Serializable{
+	
+	private String mesType;
+
+	public String getMesType() {
+		return mesType;
+	}
+
+	public void setMesType(String mesType) {
+		this.mesType = mesType;
+	}
+	
+}

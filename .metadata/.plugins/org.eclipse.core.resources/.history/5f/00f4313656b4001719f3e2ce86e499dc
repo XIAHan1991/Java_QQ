@@ -1,0 +1,13 @@
+package com.qq.server.manager;
+import java.util.*;
+import com.qq.server.model.*;
+
+/*
+ * the class manager the connected client thread
+ */
+
+public class ManagerConnectUser {
+	public static HashMap<String,ServerConClientThread> ConectedClients =
+			new HashMap<String,ServerConClientThread>();
+	
+}

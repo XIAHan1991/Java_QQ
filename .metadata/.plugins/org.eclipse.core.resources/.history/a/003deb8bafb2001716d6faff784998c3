@@ -1,0 +1,101 @@
+package com.qq.client.view;
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class QqFriendsList extends JFrame implements ActionListener{
+
+	//Card One
+	JButton jb1,jb2,jb3;
+	JScrollPane jsp1;
+	JPanel jp1,jp1C,jp1S;
+	CardLayout myCards;
+	//Card Two
+	JButton jb21,jb22,jb23;
+	JScrollPane jsp2;
+	JPanel jp2,jp2C,jp2N;
+	//Card Three
+	JButton jb31,jb32,jb33;
+	JScrollPane jsp3;
+	JPanel jp3,jp3C,jp3N;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new QqFriendsList();
+	}
+	public QqFriendsList(){
+		//Card 1 
+		jb1 = new JButton("My Friends");
+		jb1.addActionListener(this);
+		jb1.setActionCommand("Friends");
+		jb2 = new JButton("陌生人");
+		jb2.addActionListener(this);
+		jb2.setActionCommand("Strangers");
+		jb3 = new JButton("黑名单");
+		jp1 = new JPanel(new BorderLayout());
+		jp1C = new JPanel(new GridLayout(50,1,4,4));
+		jp1S = new JPanel(new GridLayout(2,1));
+		
+		jp1S.add(jb2); jp1S.add(jb3);
+		
+		JLabel[] jlbs = new JLabel[50];
+		for(int i = 0; i < 50 ; i++){
+			jlbs[i] = new JLabel(i+1+"",new ImageIcon("Images/head.GIF"),JLabel.LEFT);
+			jp1C.add(jlbs[i]);
+		}
+		jsp1 = new JScrollPane(jp1C);
+		
+		jp1.add(jb1,"North");
+		jp1.add(jsp1,"Center");
+		jp1.add(jp1S,"South");
+		
+		// Card 2
+		jb21 = new JButton("My Friends");
+		jb21.addActionListener(this);
+		jb21.setActionCommand("Friends");
+		jb22 = new JButton("陌生人");
+		jb22.addActionListener(this);
+		jb22.setActionCommand("Strangers");
+		jb23 = new JButton("黑名单");
+		
+		jp2C = new JPanel(new GridLayout(20,1,4,4));
+		JLabel[] jlb2s = new JLabel[20];
+		for(int i = 0; i < 20 ; i++){
+			jlb2s[i] = new JLabel(i+1+"M",new ImageIcon("Images/head.GIF"),JLabel.LEFT);
+			jp2C.add(jlb2s[i]);
+		}
+		jp2N = new JPanel(new GridLayout(2,1,0,0));
+		jp2N.add(jb21); jp2N.add(jb22);
+		jsp2 = new JScrollPane(jp2C);
+		
+		jp2 = new JPanel(new BorderLayout());
+		jp2.add(jp2N,"North");
+		jp2.add(jsp2,"Center");
+		jp2.add(jb23,"South");
+		
+		myCards = new CardLayout();
+		this.setLayout(myCards);
+		this.add(jp1,"1");
+		this.add(jp2,"2");
+		this.setSize(140,400);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getActionCommand().equals("Strangers")){
+			myCards.show(this.getContentPane(), "2");
+			System.out.println("Strangers");
+		}
+		if (e.getActionCommand().equals("Friends")){
+			myCards.show(this.getContentPane(), "1");
+		}
+	}
+	
+
+}

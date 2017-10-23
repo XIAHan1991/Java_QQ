@@ -1,0 +1,39 @@
+package com.qq.client.view;
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class QqFriendsList extends JFrame{
+
+	JButton jb1,jb2,jb3;
+	JScrollPane jsp1;
+	JPanel jp1,jp2,jp3;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+	public QqFriendsList(){
+		jb1 = new JButton("My Friends");
+		jb2 = new JButton("陌生人");
+		jb3 = new JButton("黑名单");
+		jp1 = new JPanel(new BorderLayout());
+		jp2 = new JPanel(new GridLayout(50,1,4,4));
+		jp3 = new JPanel(new GridLayout(2,1));
+		
+		jp3.add(jb2); jp3.add(jb3);
+		
+		jsp1 = new JScrollPane(jp2);
+		JLabel[] jlbs = new JLabel[50];
+		for(int i = 0; i < 50 ; i++){
+			jlbs[i] = new JLabel(new ImageIcon());
+		}
+		
+		
+		this.setVisible(true);
+	}
+	
+
+}

@@ -1,0 +1,29 @@
+package com.qq.server.view;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.*;
+
+public class MyServerFrame extends JFrame{
+
+	JButton jb1,jb2;
+	JPanel jp1;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		new MyServerFrame();
+	}
+	public MyServerFrame(){
+		jp1 = new JPanel();
+		jb1 = new JButton("启动服务器");
+		jb2 = new JButton("关闭服务器");
+		jp1.add(jb1); jp1.add(jb2);
+		
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.add(jp1);
+		this.setSize(500,400);
+		this.setVisible(true);
+	}
+	
+
+}

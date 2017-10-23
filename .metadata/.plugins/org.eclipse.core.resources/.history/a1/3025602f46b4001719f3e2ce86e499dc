@@ -1,0 +1,178 @@
+package com.qq.client.view;
+/*
+ * The Frame for show the friend list
+ */
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+import com.qq.client.model.QqClientUser;
+import com.qq.client.model.QqConServer;
+
+
+public class QqFriendsList extends JFrame implements ActionListener,MouseListener{
+
+	//Card One
+	JButton jb1,jb2,jb3;
+	JScrollPane jsp1;
+	JPanel jp1,jp1C,jp1S;
+	CardLayout myCards;
+	//Card Two
+	JButton jb21,jb22,jb23;
+	JScrollPane jsp2;
+	JPanel jp2,jp2C,jp2N;
+	//Card Three
+	JButton jb31,jb32,jb33;
+	JScrollPane jsp3;
+	JPanel jp3,jp3C,jp3N;
+	//QqConServer myCon;
+	String ownerID;
+	
+	public QqFriendsList(String ownerID){
+		//this.myCon = myCon;
+		this.ownerID = ownerID;
+		//Card 1 
+		
+		InitCard1();
+		InitCard2();
+		InitCard3();
+		myCards = new CardLayout();
+		this.setLayout(myCards);
+		this.add(jp1,"1");
+		this.add(jp2,"2");
+		this.add(jp3,"3");
+		this.setSize(140,400);
+		this.setVisible(true);
+		this.setTitle(ownerID);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	}
+	public void InitCard1(){
+		jb1 = new JButton("My Friends");
+		jb1.addActionListener(this);
+		jb1.setActionCommand("Friends");
+		jb2 = new JButton("陌生人");
+		jb2.addActionListener(this);
+		jb2.setActionCommand("Strangers");
+		jb3 = new JButton("黑名单");
+		jb3.addActionListener(this);
+		jb3.setActionCommand("Black");
+		jp1 = new JPanel(new BorderLayout());
+		jp1C = new JPanel(new GridLayout(50,1,4,4));
+		jp1S = new JPanel(new GridLayout(2,1));
+		
+		jp1S.add(jb2); jp1S.add(jb3);
+		
+		JLabel[] jlbs = new JLabel[50];
+		for(int i = 0; i < 50 ; i++){
+			jlbs[i] = new JLabel(i+1+"",new ImageIcon("Images/head.GIF"),JLabel.LEFT);
+			jlbs[i].addMouseListener(this);
+			jp1C.add(jlbs[i]);
+		}
+		jsp1 = new JScrollPane(jp1C);
+		
+		jp1.add(jb1,"North");
+		jp1.add(jsp1,"Center");
+		jp1.add(jp1S,"South");
+	}
+	public void InitCard2(){
+		jb21 = new JButton("My Friends");
+		jb21.addActionListener(this);
+		jb21.setActionCommand("Friends");
+		jb22 = new JButton("陌生人");
+		jb22.addActionListener(this);
+		jb22.setActionCommand("Strangers");
+		jb23 = new JButton("黑名单");
+		jb23.addActionListener(this);
+		jb23.setActionCommand("Black");
+		jp2C = new JPanel(new GridLayout(20,1,4,4));
+		JLabel[] jlb2s = new JLabel[20];
+		for(int i = 0; i < 20 ; i++){
+			jlb2s[i] = new JLabel(i+1+"M",new ImageIcon("Images/head.GIF"),JLabel.LEFT);
+			jlb2s[i].addMouseListener(this);
+			jp2C.add(jlb2s[i]);
+		}
+		jp2N = new JPanel(new GridLayout(2,1,0,0));
+		jp2N.add(jb21); jp2N.add(jb22);
+		jsp2 = new JScrollPane(jp2C);
+		
+		jp2 = new JPanel(new BorderLayout());
+		jp2.add(jp2N,"North");
+		jp2.add(jsp2,"Center");
+		jp2.add(jb23,"South");
+	}
+	public void InitCard3(){
+		jb31 = new JButton("My Friends");
+		jb31.addActionListener(this);
+		jb31.setActionCommand("Friends");
+		jb32 = new JButton("陌生人");
+		jb32.addActionListener(this);
+		jb32.setActionCommand("Strangers");
+		jb33 = new JButton("黑名单");
+		jb33.addActionListener(this);
+		jb33.setActionCommand("Black");
+		
+		jp3C = new JPanel(new GridLayout(20,1,4,4));
+		JLabel[] jlb3s = new JLabel[10];
+		for(int i = 0; i < 10 ; i++){
+			jlb3s[i] = new JLabel(i+1+"B",new ImageIcon("Images/head.GIF"),JLabel.LEFT);
+			jlb3s[i].addMouseListener(this);
+			jp3C.add(jlb3s[i]);
+		}
+		jp3N = new JPanel(new GridLayout(3,1,0,0));
+		jp3N.add(jb31); jp3N.add(jb32); jp3N.add(jb33);
+		jsp3 = new JScrollPane(jp3C);
+		
+		jp3 = new JPanel(new BorderLayout());
+		jp3.add(jp3N,"North");
+		jp3.add(jsp3,"Center");
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getActionCommand().equals("Strangers")){
+			myCards.show(this.getContentPane(), "2");
+			System.out.println("Strangers");
+		}
+		if (e.getActionCommand().equals("Friends")){
+			myCards.show(this.getContentPane(), "1");
+		}
+		if (e.getActionCommand().equals("Black")){
+			myCards.show(this.getContentPane(), "3");
+		}
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getClickCount() == 2){
+			String friendsNo = ((JLabel) e.getSource()).getText();
+			System.out.println("你希望和"+friendsNo+"聊天");
+			new ChatDialog(this.ownerID,friendsNo);
+		}
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		JLabel jl = (JLabel) e.getSource();
+		jl.setForeground(Color.red);
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		JLabel jl = (JLabel) e.getSource();
+		jl.setForeground(Color.black);
+	}
+	
+
+}

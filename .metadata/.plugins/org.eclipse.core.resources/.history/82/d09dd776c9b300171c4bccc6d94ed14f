@@ -1,0 +1,12 @@
+package com.qq.client.model;
+
+import com.qq.common.*;
+public class QqClientUser {
+	
+	QqConServer myCon;
+	public boolean CheckUser(User u){
+		myCon = new QqConServer();
+		return myCon.sendLoginInfo(u);
+	}
+
+}
